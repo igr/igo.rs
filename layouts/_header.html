@@ -1,0 +1,11 @@
+<title><%= val(:title) || title %></title>
+<link href="/favicon.ico" rel="icon">
+<meta charset="utf8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<% for p in @item.fetch(:head, []) %>
+	<%= render "/_#{p}.*" %>
+<% end %>

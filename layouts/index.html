@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<%= render '/_header.html', :title => "igo.rs" %>
+	<style>
+	</style>
+</head>
+<body>
+	<main>
+		<div class="first link">
+		<span class="square">
+			<a href="http://jodd.org" class="ttenth before after" target="_blank">
+				<i class="fa fa-paper-plane" title="jodd"></i>jodd
+			</a>
+		</span>
+		</div>
+
+		<div class="link">
+		<span class="square">
+			<a href="https://oblac.rs" class="tenth before after" target="_blank" title="Oblac kaže...">
+				<i class="fa fa-cloud" aria-hidden="true"></i>blog
+			</a>
+		</span>
+		</div>
+
+		<div class="link">
+		<span class="square">
+			<a href="https://github.com/igr?utf8=✓&tab=repositories&q=&type=source&language=" class="tenth before after" target="_blank" title="github">
+				<i class="fa fa-github"></i>github
+			</a>
+		</span>
+		</div>
+
+		<div class="link">
+		<span class="square">
+			<a href="https://500px.com/igo_rs" class="tenth before after"  target="_blank" title="500px">
+				<i class="fa fa-camera-retro"></i>photos
+			</a>
+		</span>
+		</div>
+
+		<div class="link">
+		<span class="square">
+			<a href="mailto:igor.spasic+hello@gmail.com" class="tenth before after" title="Contact">
+				<i class="fa fa-envelope"></i>contact
+			</a>
+		</span>
+		</div>
+
+		<section></section>
+	</main>
+</body>
+<script>
+$(function() {
+	var links = [
+		"fx/simple/simple.html",
+		"fx/oola/oola.html",
+		"fx/heart/heart.html",
+		"fx/stsd/stsd.html",
+		"fx/pulse/pulse.html",
+	];
+	var fx = links[Math.floor(Math.random()*links.length)];
+	$('section').load(fx);
+});
+</script>
+</html>

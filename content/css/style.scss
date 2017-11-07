@@ -1,0 +1,187 @@
+@import "mixins";
+@import "hacks";
+
+//@import url(http://fonts.googleapis.com/css?family=Gentium+Basic);
+@import url(http://fonts.googleapis.com/css?family=Rufina);
+
+$width: 640px;
+$footerHeight: 0;
+$fontSize: 22px;
+$color-background: #e7e7e7;
+$linkSize: 1.5em;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+	height: 100%;
+}
+body {
+	background-color: #fff;
+}
+
+main {
+	width: $width;
+	margin: 0 auto;
+	font-family: 'Rufina';
+	font-size: $fontSize;
+	background-color: $color-background;
+	text-align: center;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto 0-$footerHeight;
+	border-left: 40px solid #ddd;
+	border-right: 40px solid #eee;
+
+	.fa {
+		font-size: 1.2em;
+		position: relative;
+		top: 3px;
+		margin-right: 10px;
+	}
+}
+
+section {
+  margin-top: 50px;
+  font-size: 1em;
+}
+.first {
+	padding-top: 40px !important;
+}
+
+@media (max-width: 720px) {
+    main {
+        width: 100%;
+        border: 0;
+        font-size: $fontSize*0.8;
+    }
+    section {
+    	margin-top: 30px;
+    }
+}
+
+// --- links ---
+
+.link{
+  padding:1em 0 0 0;
+}
+a,a:visited,a:hover,a:active{
+  -webkit-backface-visibility:hidden;
+          backface-visibility:hidden;
+	position:relative;
+  transition:0.5s color ease;
+	text-decoration:none;
+	color:#666;
+	font-size: $linkSize;
+}
+a:hover{
+	color:#d73444;
+}
+a.before:before,a.after:after{
+  content: "";
+  transition:0.5s all ease;
+  -webkit-backface-visibility:hidden;
+          backface-visibility:hidden;
+  position:absolute;
+}
+a.before:before{
+  top:-0.25em;
+}
+a.after:after{
+  bottom:-0.25em;
+}
+a.before:before,a.after:after{
+  height:5px;
+  height:0.35rem;
+  width:0;
+  background:#d73444;
+}
+a.first:after{
+  left:0;
+}
+a.second:after{
+  right:0;
+}
+a.third:after,a.sixth:before,a.sixth:after{
+  left:50%;
+  -webkit-transform:translateX(-50%);
+          transform:translateX(-50%);
+}
+a.fourth:before,a.fourth:after{
+  left:0;
+}
+a.fifth:before,a.fifth:after{
+  right:0;
+}
+a.seventh:before{
+  right:0;
+}
+a.seventh:after{
+  left:0;
+}
+a.eigth:before{
+  left:0;
+}
+a.eigth:after{
+  right:0;
+}
+a.before:hover:before,a.after:hover:after{
+  width:100%;
+}
+.square{
+  box-sizing:border-box;
+  margin-left:-0.4em;
+  position:relative;
+  font-size:$linkSize;
+  overflow:hidden;
+}
+.square a{
+  position:static;
+  font-size:100%;
+  padding:0.2em 0.4em;
+}
+.square:before,.square:after{
+  content: "";
+  box-sizing:border-box;
+  transition:0.25s all ease;
+  -webkit-backface-visibility:hidden;
+          backface-visibility:hidden;
+  position:absolute;
+  width:5px;
+  width:0.35rem;
+  height:0;
+  background:#d73444;
+}
+.square:before{
+  left:0;
+  bottom:-0.2em;
+}
+.square.individual:before{
+  transition-delay:0.6s;
+}
+.square:after{
+  right:0;
+  top:-0.2em;
+}
+.square.individual:after{
+  transition-delay:0.2s;
+}
+.square a:before{
+  left:0;
+  transition:0.25s all ease;
+}
+.square a:after{
+  right:0;
+  transition:0.25s all ease;
+}
+.square.individual a:after{
+  transition:0.25s all ease 0.4s;
+}
+.square:hover:before,.square:hover:after{
+  height:calc(100% + 0.4em);
+}
+.square:hover a:before,.square:hover a:after{
+  width:100%;
+}

@@ -1,0 +1,74 @@
+<style>
+canvas {
+	width: 400px;
+	height: 400px;
+}
+@media (max-width: 720px) {
+	#theCanvas {
+		width: 330px;
+		height: 330px;
+	}
+}
+</style>
+
+<canvas id="theCanvas"></canvas>
+
+<!--script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script-->
+<!--script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script-->
+
+<script>
+function resizeCanvasToDisplaySize(canvas) {
+   // look up the size the canvas is being displayed
+   const width = canvas.clientWidth;
+   const height = canvas.clientHeight;
+
+   // If it's resolution does not match change it
+   if (canvas.width !== width || canvas.height !== height) {
+     canvas.width = width;
+     canvas.height = height;
+     return true;
+   }
+   return false;
+}
+
+function go() {
+	var canvas = document.getElementById('theCanvas');
+	resizeCanvasToDisplaySize(canvas);
+
+    var ctx = canvas.getContext('2d');
+    var cWidth = canvas.width;
+    var cHeight = canvas.height;
+
+    var stage = new createjs.Stage("theCanvas");
+
+    var circle = new Array(6);
+    var total = 12;
+
+    for (i = 0; i < total; i++) {
+    	circle[i] = new createjs.Shape();
+    	var trans = (2 / total);
+		circle[i].graphics
+			.beginFill("rgba(255,0,30," + trans + ")")
+			.drawCircle(cWidth/2, cHeight/2, 100);
+		stage.addChild(circle[i]);
+
+		var tx = Math.sin(i * 2 * Math.PI / total) * 70;
+		var ty = Math.cos(i * 2 * Math.PI / total) * 70;
+
+		createjs.Tween.get(circle[i], { loop: true })
+  			.to({ x: tx, y: ty }, 2000, createjs.Ease.getPowInOut(4))
+  			.to({ x: 0, y: 0 }, 2000, createjs.Ease.getPowInOut(10));
+    }
+
+	stage.update();
+
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener("tick", stage);
+}
+
+$.getScript("https://code.createjs.com/easeljs-0.8.2.min.js", function() {
+	$.getScript("https://code.createjs.com/tweenjs-0.6.2.min.js", function() {
+		$(document).ready(go);
+	});
+});
+</script>
