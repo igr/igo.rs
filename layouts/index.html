@@ -51,6 +51,16 @@
 	</main>
 </body>
 <script>
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 $(function() {
 	var links = [
 		"fx/simple/simple.html",
@@ -60,6 +70,15 @@ $(function() {
 		"fx/pulse/pulse.html",
 	];
 	var fx = links[Math.floor(Math.random()*links.length)];
+
+	for (i = 0; i < links.length; i++) {
+		var q = (i + 1).toString();
+		if (getParameterByName(q) === '') {
+			fx = links[i];
+			break;
+		}
+	}
+
 	$('section').load(fx);
 });
 </script>
