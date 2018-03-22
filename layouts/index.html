@@ -47,6 +47,14 @@
 		</span>
 		</div>
 
+		<div class="link">
+		<span class="square">
+			<a href="#" class="tenth before after" title="Fun" onclick="show(); return false;">
+				<i class="fa fa-heart" aria-hidden="true"></i>fun
+			</a>
+		</span>
+		</div>
+
 		<section></section>
 	</main>
 </body>
@@ -61,7 +69,7 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-$(function() {
+function show() {
 	var links = [
 		"fx/simple/simple.html",	// 1
 		"fx/oola/oola.html",		// 2
@@ -81,6 +89,6 @@ $(function() {
 	}
 
 	$('section').load(fx);
-});
+}
 </script>
 </html>
