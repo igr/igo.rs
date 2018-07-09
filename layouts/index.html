@@ -17,16 +17,24 @@
 
 		<div class="link">
 		<span class="square">
-			<a href="https://oblac.rs" class="tenth before after" target="_blank" title="Oblac kaže...">
-				<i class="fa fa-cloud" aria-hidden="true"></i>blog
+			<a href="https://github.com/igr?utf8=✓&tab=repositories&q=&type=source&language=" class="tenth before after" target="_blank" title="github">
+				<i class="fa fa-github"></i>github
 			</a>
 		</span>
 		</div>
 
 		<div class="link">
 		<span class="square">
-			<a href="https://github.com/igr?utf8=✓&tab=repositories&q=&type=source&language=" class="tenth before after" target="_blank" title="github">
-				<i class="fa fa-github"></i>github
+			<a href="https://www.linkedin.com/in/igorspasic/" class="tenth before after" title="linkedin" target="_blank">
+				<i class="fa fa-linkedin-square" aria-hidden="true"></i>linked in
+			</a>
+		</span>
+		</div>
+
+		<div class="link">
+		<span class="square">
+			<a href="https://oblac.rs" class="tenth before after" target="_blank" title="Oblac kaže...">
+				<i class="fa fa-cloud" aria-hidden="true"></i>blog
 			</a>
 		</span>
 		</div>
@@ -43,14 +51,6 @@
 		<span class="square">
 			<a href="mailto:igor.spasic+hello@gmail.com" class="tenth before after" title="Contact">
 				<i class="fa fa-envelope"></i>contact
-			</a>
-		</span>
-		</div>
-
-		<div class="link">
-		<span class="square">
-			<a href="#" class="tenth before after" title="Fun" onclick="show(); return false;">
-				<i class="fa fa-heart" aria-hidden="true"></i>fun
 			</a>
 		</span>
 		</div>
@@ -78,7 +78,8 @@ function show() {
 		"fx/pulse/pulse.html",		// 5
 		"fx/world/world.html",		// 6
 	];
-	var fx = links[Math.floor(Math.random()*links.length)];
+	//var fx = links[Math.floor(Math.random()*links.length)];
+	var fx = links[1];
 
 	for (i = 0; i < links.length; i++) {
 		var q = (i + 1).toString();
@@ -90,5 +91,9 @@ function show() {
 
 	$('section').load(fx);
 }
+
+$(function() {
+	//show();
+});
 </script>
 </html>
