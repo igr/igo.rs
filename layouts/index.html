@@ -1,99 +1,15 @@
-<!doctype html>
-<html>
-<head>
-	<%= render '/_header.html', :title => "igo.rs" %>
-	<style>
-	</style>
-</head>
-<body>
-	<main>
-		<div class="first link">
-		<span class="square">
-			<a href="http://jodd.org" class="ttenth before after" target="_blank">
-				<i class="fa fa-paper-plane" title="jodd"></i>jodd
-			</a>
-		</span>
-		</div>
+{{ define "main" }}
 
-		<div class="link">
-		<span class="square">
-			<a href="https://github.com/igr?utf8=✓&tab=repositories&q=&type=source&language=" class="tenth before after" target="_blank" title="github">
-				<i class="fa fa-github"></i>github
-			</a>
-		</span>
-		</div>
+		{{ partial "link" (dict "url" "https://jodd.org" "title" "jodd" "name" "jodd" "icon" "fa-paper-plane") }}
 
-		<div class="link">
-		<span class="square">
-			<a href="https://www.linkedin.com/in/igorspasic/" class="tenth before after" title="linkedin" target="_blank">
-				<i class="fa fa-linkedin-square" aria-hidden="true"></i>linked in
-			</a>
-		</span>
-		</div>
+		{{ partial "link" (dict "url" "https://github.com/igr?utf8=✓&tab=repositories&q=&type=source" "title" "github" "name" "github" "icon" "fa-github") }}
 
-		<div class="link">
-		<span class="square">
-			<a href="https://oblac.rs" class="tenth before after" target="_blank" title="Oblac kaže...">
-				<i class="fa fa-cloud" aria-hidden="true"></i>blog
-			</a>
-		</span>
-		</div>
+		{{ partial "link" (dict "url" "https://www.linkedin.com/in/igorspasic/" "title" "linkedin" "name" "linked in" "icon" "fa-linkedin-square") }}
 
-		<div class="link">
-		<span class="square">
-			<a href="https://500px.com/igo_rs" class="tenth before after"  target="_blank" title="500px">
-				<i class="fa fa-camera-retro"></i>photos
-			</a>
-		</span>
-		</div>
+		{{ partial "link" (dict "url" "https://oblac.rs" "title" "Oblac kaže..." "name" "blog" "icon" "fa-cloud") }}
 
-		<div class="link">
-		<span class="square">
-			<a href="mailto:igor.spasic+hello@gmail.com" class="tenth before after" title="Contact">
-				<i class="fa fa-envelope"></i>contact
-			</a>
-		</span>
-		</div>
+		{{ partial "link" (dict "url" "https://500px.com/igo_rs" "title" "500px" "name" "photos" "icon" "fa-camera-retro") }}
 
-		<section></section>
-	</main>
-</body>
-<script>
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+		{{ partial "link" (dict "url" "mailto:igor.spasic+hello@gmail.com" "title" "contact" "name" "contact" "icon" "fa-envelope") }}
 
-function show() {
-	var links = [
-		"fx/simple/simple.html",	// 1
-		"fx/oola/oola.html",		// 2
-		"fx/heart/heart.html",		// 3
-		"fx/stsd/stsd.html",		// 4
-		"fx/pulse/pulse.html",		// 5
-		"fx/world/world.html",		// 6
-	];
-	//var fx = links[Math.floor(Math.random()*links.length)];
-	var fx = links[1];
-
-	for (i = 0; i < links.length; i++) {
-		var q = (i + 1).toString();
-		if (getParameterByName(q) === '') {
-			fx = links[i];
-			break;
-		}
-	}
-
-	$('section').load(fx);
-}
-
-$(function() {
-	//show();
-});
-</script>
-</html>
+{{ end }}
