@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{ .Title }}</title>
+	<link href="/favicon.ico" rel="icon">
+	<meta charset="utf8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
+    <link rel='stylesheet' href='{{ $style.RelPermalink }}' type='text/css' media='all' />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+main {
+	text-align: left;
+	padding: 1em;
+	width: 80%;
+	display: block;
+	height: auto;
+}
+p {
+	line-height: 1.4em;
+	margin-bottom: 1em;
+}
+h1 {
+	font-size: 4em;
+}
+h2 {
+	margin: 2em 1em 1em 0;
+	background-color: $color-purple;
+	font-size: 2em;
+}
+h3 {
+	margin: 2em 1em 0.5em 0;
+}
+ul li {
+	margin: 1em 0 0 2em;
+}
+</style>
+</head>
+<body>
+	<main>
+		<h1>{{ .Title }}</h1>
+
+		<ul>
+			<li><code>{{ .Permalink }}</code></li>
+			<li>Submit your solutions to <code>igsp</code></li>
+		</ul>
+
+		{{ block "main" . }}{{ end }}
+	</main>
+</body>
+</html>
