@@ -28,6 +28,8 @@ $color-silver: #DDDDDD;
 $color-gray: #AAAAAA;
 $color-black: #111111;
 
+
+
 * {
     margin: 0;
     padding: 0;
@@ -201,4 +203,46 @@ a.before:hover:before,a.after:hover:after{
 }
 .square:hover a:before,.square:hover a:after{
   width:100%;
+}
+
+
+.box-orange:before,.box-orange:after, a.box-orange:before,a.box-orange:after {
+  background: $color-orange;
+}
+a.box-orange:hover{
+  color: $color-orange;
+}
+
+.box-blue:before,.box-blue:after, a.box-blue:before,a.box-blue:after {
+  background: $color-blue;
+}
+a.box-blue:hover{
+  color: $color-blue;
+}
+
+.box-red:before,.box-red:after, a.box-red:before,a.box-red:after {
+  background: $color-red;
+}
+a.box-red:hover{
+  color: $color-red;
+}
+
+.box-purple:before,.box-purple:after, a.box-purple:before,a.box-purple:after {
+  background: $color-purple;
+}
+a.box-purple:hover{
+  color: $color-purple;
+}
+
+.box-teal:before,.box-teal:after, a.box-teal:before,a.box-teal:after {
+  background: $color-teal;
+}
+a.box-teal:hover{
+  color: $color-teal;
+}
+.box-maroon:before,.box-maroon:after, a.box-maroon:before,a.box-maroon:after {
+  background: $color-maroon;
+}
+a.box-maroon:hover{
+  color: $color-maroon;
 }
