@@ -14,7 +14,7 @@ Write a program that will simulate Theseus' pursuit of the Minotaur.
 
 ## Input
 
-Input will consist of a series of labyrinths. Each labyrinth will contain a series of cavern descriptors, one per line. Each line will contain a cavern identifier (a single upper case character) followed by a colon (:) and a list of caverns reachable from it (in counterclockwise order). No cavern will be connected to itself. The cavern descriptors will not be ordered in any way. The description of a labyrinth will be terminated by a line starting with a @ character, followed by two pairs of cavern identifiers. The first pair indicates the passage in which Theseus starts, and the second in which the Minotaur starts. The travel in a starting passage is toward the cavern whose identifier is the second character in the pair. The file will be terminated by a line consisting of a single #.
+Input will consist of a series of labyrinths. Each labyrinth will contain a series of cavern descriptors, one per line. Each line will contain a cavern identifier (a single upper case character) followed by a colon (`:`) and a list of caverns reachable from it (in counterclockwise order). No cavern will be connected to itself. The cavern descriptors will not be ordered in any way. The description of a labyrinth will be terminated by a line starting with a `@` character, followed by two pairs of cavern identifiers. The first pair indicates the passage in which Theseus starts, and the second in which the Minotaur starts. The travel in a starting passage is toward the cavern whose identifier is the second character in the pair. The file will be terminated by a line consisting of a single `#`.
 
 A final encounter is possible for each input data set.
 
