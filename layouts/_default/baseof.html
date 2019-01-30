@@ -6,6 +6,11 @@
 	<meta charset="utf8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:title" content="igo.rs">
+	<meta property="og:description" content="Igors stuff">
+	<meta property="og:url" content="http://igo.rs">
+
 	{{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
     <link rel='stylesheet' href='{{ $style.RelPermalink }}' type='text/css' media='all' />
     <script
