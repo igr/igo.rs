@@ -1,207 +1,75 @@
 @import "mixins";
 @import "hacks";
+@import "normalize";
 
-//@import url(https://fonts.googleapis.com/css?family=Gentium+Basic);
-@import url(https://fonts.googleapis.com/css?family=Rufina);
+// @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:700');
+// $font: "Anonymous Pro";
 
-$width: 640px;
-$footerHeight: 0;
-$fontSize: 22px;
-$color-background: #e7e7e7;
-$color-link: #666;
-$linkSize: 1.5em;
+@import url('https://fonts.googleapis.com/css?family=Cousine:400');
+$font: "Cousine";
 
-$color-navy: #001F3F;
-$color-blue: #0074D9;
-$color-aqua: #7FDBFF;
-$color-teal: #39CCCC;
-$color-olive: #3D9970;
-$color-green: #2ECC40;
-$color-lime: #01FF70;
-$color-yellow: #FFDC00;
-$color-orange: #FF851B;
-$color-red: #FF4136;
-$color-fuchsia: #F012BE;
-$color-purple: #B10DC9;
-$color-maroon: #85144B;
-$color-white: #FFFFFF;
-$color-silver: #DDDDDD;
-$color-gray: #AAAAAA;
-$color-black: #111111;
+// @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:500');
+// $font: "Source Code Pro";
+
+// @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400');
+// $font: "IBM Plex Mono";
 
 
+$color-background: #fff;
+$color-text: #000;
+$color-text-2: #111;
+$color-text-hover: #ff0000;
 
-* {
-    margin: 0;
-    padding: 0;
-}
-html, body {
-	height: 100%;
-}
 body {
-	background-color: #fff;
+	background-color: $color-background;
+  font-size: 14px;
 }
 
 main {
-  display: grid;
-  grid-template-rows: auto auto auto auto auto 1fr;
-  grid-gap: 10px;
-	width: $width;
+  display: flex;
+	width: 100%;
 	margin: 0 auto;
-	font-family: 'Rufina';
-	font-size: $fontSize;
+	font-family: $font, serif;
 	background-color: $color-background;
 	text-align: center;
   height: 100vh;
-	border-left: 40px solid #ddd;
-	border-right: 40px solid #eee;
-
-  div:first-child {
-    margin-top: 40px;
-  }
-  div.link span {
-    padding: 10px;
-  }
-
-	.fa {
-		font-size: 1.2em;
-		position: relative;
-		top: 3px;
-		margin-right: 10px;
-	}
+  font-size: 4vmin;
+  justify-content: center;
+  align-items: center;
+  text-rendering: optimizeLegibility;
+  //text-shadow: 2px 2px 0 #ccc;
 }
 
-@media (max-width: 720px) {
+#table {
+  display: table;
+  div.row {
+    display: table-row;
+    div {
+      display: table-cell;
+      text-transform: uppercase;
+    }
+  }
+}
+
+a {
+  display: block;
+  color: $color-text;
+  padding: 1em;
+  text-decoration: none;
+  &.hov, &:hover {
+    color: $color-text-hover;
+  }
+}
+.github a, .photo a, .blog a {
+  color: $color-text-2;
+  &.hov, &:hover {
+    color: $color-text-hover;
+  }
+}
+
+@media (max-width: 480px) {
     main {
-        width: 100%;
-        border: 0;
-        font-size: $fontSize*0.8;
-    }
-    section {
-    	margin-top: 30px;
+      font-size: 6vmin;
     }
 }
 
-// --- links ---
-
-.link{
-  padding:1em 0 0 0;
-}
-a,a:visited,a:hover,a:active{
-  -webkit-backface-visibility:hidden;
-          backface-visibility:hidden;
-	position:relative;
-  transition:0.5s color ease;
-	text-decoration:none;
-	color: $color-link;
-	font-size: $linkSize;
-}
-a:hover{
-	color: $color-link;
-}
-a.before:before,a.after:after{
-  content: "";
-  transition:0.5s all ease;
-  -webkit-backface-visibility:hidden;
-          backface-visibility:hidden;
-  position:absolute;
-}
-a.before:before{
-  top:-0.25em;
-}
-a.after:after{
-  bottom:-0.25em;
-}
-a.before:before,a.after:after{
-  height:5px;
-  height:0.35rem;
-  width:0;
-  background: $color-link;
-}
-a.first:after{
-  left:0;
-}
-a.second:after{
-  right:0;
-}
-a.third:after,a.sixth:before,a.sixth:after{
-  left:50%;
-  -webkit-transform:translateX(-50%);
-          transform:translateX(-50%);
-}
-a.fourth:before,a.fourth:after{
-  left:0;
-}
-a.fifth:before,a.fifth:after{
-  right:0;
-}
-a.seventh:before{
-  right:0;
-}
-a.seventh:after{
-  left:0;
-}
-a.eigth:before{
-  left:0;
-}
-a.eigth:after{
-  right:0;
-}
-a.before:hover:before,a.after:hover:after{
-  width:100%;
-}
-.square{
-  box-sizing:border-box;
-  margin-left:-0.4em;
-  position:relative;
-  font-size:$linkSize;
-  overflow:hidden;
-}
-.square a{
-  position:static;
-  font-size:100%;
-  padding:0.2em 0.4em;
-}
-.square:before,.square:after{
-  content: "";
-  box-sizing:border-box;
-  transition:0.25s all ease;
-  -webkit-backface-visibility:hidden;
-          backface-visibility:hidden;
-  position:absolute;
-  width:5px;
-  width:0.35rem;
-  height:0;
-  background: $color-link;
-}
-.square:before{
-  left:0;
-  bottom:-0.2em;
-}
-.square.individual:before{
-  transition-delay:0.6s;
-}
-.square:after{
-  right:0;
-  top:-0.2em;
-}
-.square.individual:after{
-  transition-delay:0.2s;
-}
-.square a:before{
-  left:0;
-  transition:0.25s all ease;
-}
-.square a:after{
-  right:0;
-  transition:0.25s all ease;
-}
-.square.individual a:after{
-  transition:0.25s all ease 0.4s;
-}
-.square:hover:before,.square:hover:after{
-  height:calc(100% + 0.4em);
-}
-.square:hover a:before,.square:hover a:after{
-  width:100%;
-}

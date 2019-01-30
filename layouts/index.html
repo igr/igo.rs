@@ -1,15 +1,82 @@
 {{ define "main" }}
+{{ $jodd := "https://jodd.org" }}
+{{ $github := "https://github.com/igr" }}
+{{ $lin := "https://www.linkedin.com/in/igorspasic/" }}
+{{ $photos := "https://500px.com/igo_rs" }}
+{{ $hs := "https://heapspace.rs" }}
+{{ $blog := "https://oblac.rs" }}
+{{ $mail := "mailto:igor.spasic+hello@gmail.com" }}
 
-		{{ partial "link" (dict "url" "https://jodd.org" "title" "jodd" "name" "jodd" "icon" "fa-paper-plane") }}
+<div id="table">
+    <div class="row">
+    	{{ partial "link" (dict "url" $jodd "n" "jodd" "l" "J")}}
+        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "o")}}
+        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "d")}}
+        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "d")}}
+        {{ partial "link" (dict "url" $github "n" "github" "l" "G")}}
+        {{ partial "link" (dict "url" $github "n" "github" "l" "i")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $github "n" "github" "l" "t")}}
+        {{ partial "link" (dict "url" $github "n" "github" "l" "h")}}
+        {{ partial "link" (dict "url" $github "n" "github" "l" "u")}}
+        {{ partial "link" (dict "url" $github "n" "github" "l" "b")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "L")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "i")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "n")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "k")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "e")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "d")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "i")}}
+        {{ partial "link" (dict "url" $lin "n" "lin" "l" "n")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "p")}}
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "h")}}
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "o")}}
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "t")}}
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "o")}}
+        {{ partial "link" (dict "url" $photos "n" "photo" "l" "s")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "H")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "e")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "a")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "p")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "s")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "p")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "a")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "c")}}
+        {{ partial "link" (dict "url" $hs "n" "hs" "l" "e")}}
+        {{ partial "link" (dict "url" $blog "n" "blog" "l" "O")}}
+        {{ partial "link" (dict "url" $blog "n" "blog" "l" "b")}}
+        {{ partial "link" (dict "url" $blog "n" "blog" "l" "l")}}
+    </div>
+    <div class="row">
+        {{ partial "link" (dict "url" $blog "n" "blog" "l" "a")}}
+        {{ partial "link" (dict "url" $blog "n" "blog" "l" "c")}}
+        {{ partial "link" (dict "url" $mail "n" "mail" "l" "M")}}
+        {{ partial "link" (dict "url" $mail "n" "mail" "l" "a")}}
+        {{ partial "link" (dict "url" $mail "n" "mail" "l" "i")}}
+        {{ partial "link" (dict "url" $mail "n" "mail" "l" "l")}}
+    </div>
+</div>
 
-		{{ partial "link" (dict "url" "https://github.com/igr?utf8=✓&tab=repositories&q=&type=source" "title" "github" "name" "github" "icon" "fa-github") }}
-
-		{{ partial "link" (dict "url" "https://www.linkedin.com/in/igorspasic/" "title" "linkedin" "name" "linked in" "icon" "fa-linkedin-square") }}
-
-		{{ partial "link" (dict "url" "https://oblac.rs" "title" "Oblac kaže..." "name" "blog" "icon" "fa-cloud") }}
-
-		{{ partial "link" (dict "url" "https://500px.com/igo_rs" "title" "500px" "name" "photos" "icon" "fa-camera-retro") }}
-
-		{{ partial "link" (dict "url" "mailto:igor.spasic+hello@gmail.com" "title" "contact" "name" "contact" "icon" "fa-envelope") }}
-
+{{ end }}
+{{ define "script"}}
+<script type="text/javascript">
+$(function() {
+	$('div.row div').mouseenter(function() {
+		var classSelected = $(this).attr('class');
+		$('.'+ classSelected +'> a').addClass('hov');
+	})
+	.mouseleave(function() {
+		$("div.row div > a").removeClass('hov');
+	});
+});
+</script>
 {{ end }}
