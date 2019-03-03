@@ -9,8 +9,10 @@
 
 	<meta property="og:title" content="igo.rs">
 	<meta property="og:description" content="Igors stuff">
-	<meta property="og:url" content="http://igo.rs">
+	<meta property="og:url" content="{{ .Site.BaseURL }}">
 	<meta property="og:site_name" content="IGO.RS">
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="{{ .Site.BaseURL }}/igors-og.png" />
 
 	{{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
     <link rel='stylesheet' href='{{ $style.RelPermalink }}' type='text/css' media='all' />
