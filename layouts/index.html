@@ -9,73 +9,74 @@
 
 <div id="table">
     <div class="row">
-    	{{ partial "link" (dict "url" $jodd "n" "jodd" "l" "J")}}
-        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "o")}}
-        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "d")}}
-        {{ partial "link" (dict "url" $jodd "n" "jodd" "l" "d")}}
-        {{ partial "link" (dict "url" $github "n" "github" "l" "G")}}
-        {{ partial "link" (dict "url" $github "n" "github" "l" "i")}}
+    	{{ partial "cell" (dict "n" "code" "l" "C")}}
+        {{ partial "cell" (dict "n" "code" "l" "o")}}
+        {{ partial "cell" (dict "n" "code" "l" "d")}}
+        {{ partial "cell" (dict "n" "code" "l" "e")}}
+        {{ partial "cell" (dict "n" "work" "l" "W")}}
     </div>
     <div class="row">
-        {{ partial "link" (dict "url" $github "n" "github" "l" "t")}}
-        {{ partial "link" (dict "url" $github "n" "github" "l" "h")}}
-        {{ partial "link" (dict "url" $github "n" "github" "l" "u")}}
-        {{ partial "link" (dict "url" $github "n" "github" "l" "b")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "L")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "i")}}
+        {{ partial "cell" (dict "n" "work" "l" "o")}}
+        {{ partial "cell" (dict "n" "work" "l" "r")}}
+        {{ partial "cell" (dict "n" "work" "l" "k")}}
+        {{ partial "cell" (dict "n" "make" "l" "M")}}
+        {{ partial "cell" (dict "n" "make" "l" "a")}}
     </div>
     <div class="row">
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "n")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "k")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "e")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "d")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "i")}}
-        {{ partial "link" (dict "url" $lin "n" "lin" "l" "n")}}
+        {{ partial "cell" (dict "n" "make" "l" "k")}}
+        {{ partial "cell" (dict "n" "make" "l" "e")}}
+        {{ partial "cell" (dict "n" "impact" "l" "I")}}
+        {{ partial "cell" (dict "n" "impact" "l" "m")}}
+        {{ partial "cell" (dict "n" "impact" "l" "p")}}
     </div>
     <div class="row">
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "p")}}
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "h")}}
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "o")}}
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "t")}}
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "o")}}
-        {{ partial "link" (dict "url" $photos "n" "photo" "l" "s")}}
+        {{ partial "cell" (dict "n" "impact" "l" "a")}}
+        {{ partial "cell" (dict "n" "impact" "l" "c")}}
+        {{ partial "cell" (dict "n" "impact" "l" "t")}}
+        {{ partial "cell" (dict "n" "contact" "l" "C")}}
+        {{ partial "cell" (dict "n" "contact" "l" "o")}}
     </div>
     <div class="row">
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "H")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "e")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "a")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "p")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "s")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "p")}}
-    </div>
-    <div class="row">
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "a")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "c")}}
-        {{ partial "link" (dict "url" $hs "n" "hs" "l" "e")}}
-        {{ partial "link" (dict "url" $blog "n" "blog" "l" "O")}}
-        {{ partial "link" (dict "url" $blog "n" "blog" "l" "b")}}
-        {{ partial "link" (dict "url" $blog "n" "blog" "l" "l")}}
-    </div>
-    <div class="row">
-        {{ partial "link" (dict "url" $blog "n" "blog" "l" "a")}}
-        {{ partial "link" (dict "url" $blog "n" "blog" "l" "c")}}
-        {{ partial "link" (dict "url" $mail "n" "mail" "l" "M")}}
-        {{ partial "link" (dict "url" $mail "n" "mail" "l" "a")}}
-        {{ partial "link" (dict "url" $mail "n" "mail" "l" "i")}}
-        {{ partial "link" (dict "url" $mail "n" "mail" "l" "l")}}
+        {{ partial "cell" (dict "n" "contact" "l" "n")}}
+        {{ partial "cell" (dict "n" "contact" "l" "t")}}
+        {{ partial "cell" (dict "n" "contact" "l" "a")}}
+        {{ partial "cell" (dict "n" "contact" "l" "c")}}
+        {{ partial "cell" (dict "n" "contact" "l" "t")}}
     </div>
 </div>
 
 {{ end }}
+
 {{ define "script"}}
 <script type="text/javascript">
+var classSelected;
+
 $(function() {
+    // clicker
+    $('div.row div a').click(function() {
+        const box = $(this).parent();
+        const classClicked = box.attr('class');
+        if (box.hasClass(classSelected)) {
+            // unclick
+            $('.'+ classSelected).removeClass('selected');
+            classSelected = undefined;
+        }
+        else {
+            // click
+            $('div.row div').removeClass('selected');
+            classSelected = classClicked;
+            $('.'+ classSelected).addClass('selected');
+        }
+    });
+
+    // hover
 	$('div.row div').mouseenter(function() {
-		var classSelected = $(this).attr('class');
-		$('.'+ classSelected +'> a').addClass('hov');
+		const classHover = $(this).data('name');
+        console.log(classHover);
+		$('.'+ classHover +'> a').addClass('hov');
 	})
 	.mouseleave(function() {
-		$("div.row div > a").removeClass('hov');
+		$('div.row div > a').removeClass('hov');
 	});
 });
 </script>

@@ -17,7 +17,7 @@ $font: "Cousine";
 
 $color-background: #fff;
 $color-text: #000;
-$color-text-2: #111;
+$color-selected-text: #fff;
 $color-text-hover: #ff0000;
 
 html, body {
@@ -61,10 +61,10 @@ a {
     color: $color-text-hover;
   }
 }
-.github a, .photo a, .blog a {
-  color: $color-text-2;
-  &.hov, &:hover {
-    color: $color-text-hover;
+.selected {
+  background-color: $color-text-hover;
+  a {
+    color: $color-selected-text;
   }
 }
 
