@@ -114,6 +114,9 @@ $(function() {
             // click
             $('#grid a').removeClass('selected');
             nameSelected = nameClicked;
+            if (nameSelected === 'contact') {
+                return true;
+            }
             $('a[data-name='+ nameSelected + ']').addClass('selected');
             click(nameSelected);
         }
