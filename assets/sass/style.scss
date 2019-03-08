@@ -22,7 +22,7 @@ $color-text-hover: #ff0000;
 
 html, body {
 	background-color: $color-background;
-  font-size: 14px;
+  font-size: 16px;
   height: 100%;
 }
 
@@ -41,31 +41,37 @@ main {
   //text-shadow: 2px 2px 0 #ccc;
 }
 
-#table {
-  display: table;
-  div.row {
-    display: table-row;
-    div {
-      display: table-cell;
-      text-transform: uppercase;
-    }
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  div {
+    display: block;
+    text-transform: uppercase;
   }
 }
 
-a {
+a, #grid span {
   display: block;
+  padding: 1em 1.2em;
   color: $color-text;
-  padding: 1em;
   text-decoration: none;
   &.hov, &:hover {
     color: $color-text-hover;
   }
 }
-.selected {
+
+.nonselect {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+}
+
+a.selected {
   background-color: $color-text-hover;
-  a {
-    color: $color-selected-text;
-  }
+  color: $color-selected-text;
 }
 
 @media (max-width: 480px) {
@@ -73,4 +79,3 @@ a {
       font-size: 6vmin;
     }
 }
-

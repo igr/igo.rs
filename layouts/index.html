@@ -1,83 +1,138 @@
 {{ define "main" }}
-{{ $jodd := "https://jodd.org" }}
-{{ $github := "https://github.com/igr" }}
-{{ $lin := "https://www.linkedin.com/in/igorspasic/" }}
-{{ $photos := "https://500px.com/igo_rs" }}
-{{ $hs := "https://heapspace.rs" }}
-{{ $blog := "https://oblac.rs" }}
 {{ $mail := "mailto:igor.spasic+hello@gmail.com" }}
 
-<div id="table">
-    <div class="row">
-    	{{ partial "cell" (dict "n" "code" "l" "C")}}
-        {{ partial "cell" (dict "n" "code" "l" "o")}}
-        {{ partial "cell" (dict "n" "code" "l" "d")}}
-        {{ partial "cell" (dict "n" "code" "l" "e")}}
-        {{ partial "cell" (dict "n" "work" "l" "W")}}
-    </div>
-    <div class="row">
-        {{ partial "cell" (dict "n" "work" "l" "o")}}
-        {{ partial "cell" (dict "n" "work" "l" "r")}}
-        {{ partial "cell" (dict "n" "work" "l" "k")}}
-        {{ partial "cell" (dict "n" "make" "l" "M")}}
-        {{ partial "cell" (dict "n" "make" "l" "a")}}
-    </div>
-    <div class="row">
-        {{ partial "cell" (dict "n" "make" "l" "k")}}
-        {{ partial "cell" (dict "n" "make" "l" "e")}}
-        {{ partial "cell" (dict "n" "impact" "l" "I")}}
-        {{ partial "cell" (dict "n" "impact" "l" "m")}}
-        {{ partial "cell" (dict "n" "impact" "l" "p")}}
-    </div>
-    <div class="row">
-        {{ partial "cell" (dict "n" "impact" "l" "a")}}
-        {{ partial "cell" (dict "n" "impact" "l" "c")}}
-        {{ partial "cell" (dict "n" "impact" "l" "t")}}
-        {{ partial "cell" (dict "n" "contact" "l" "C")}}
-        {{ partial "cell" (dict "n" "contact" "l" "o")}}
-    </div>
-    <div class="row">
-        {{ partial "cell" (dict "n" "contact" "l" "n")}}
-        {{ partial "cell" (dict "n" "contact" "l" "t")}}
-        {{ partial "cell" (dict "n" "contact" "l" "a")}}
-        {{ partial "cell" (dict "n" "contact" "l" "c")}}
-        {{ partial "cell" (dict "n" "contact" "l" "t")}}
-    </div>
+<div id="grid">
+
+    	{{ partial "cell" (dict "n" "code" "l" "C" "p" 1 )}}
+        {{ partial "cell" (dict "n" "code" "l" "o" "p" 2 )}}
+        {{ partial "cell" (dict "n" "code" "l" "d" "p" 3 )}}
+        {{ partial "cell" (dict "n" "code" "l" "e" "p" 4 )}}
+        {{ partial "cell" (dict "n" "work" "l" "W" "p" 5 )}}
+
+        {{ partial "cell" (dict "n" "work" "l" "o" "p" 6 )}}
+        {{ partial "cell" (dict "n" "work" "l" "r" "p" 7 )}}
+        {{ partial "cell" (dict "n" "work" "l" "k" "p" 8 )}}
+        {{ partial "cell" (dict "n" "make" "l" "M" "p" 9 )}}
+        {{ partial "cell" (dict "n" "make" "l" "a" "p" 10 )}}
+
+        {{ partial "cell" (dict "n" "make" "l" "k" "p" 11 )}}
+        {{ partial "cell" (dict "n" "make" "l" "e" "p" 12 )}}
+        {{ partial "cell" (dict "n" "impact" "l" "I" "p" 13 )}}
+        {{ partial "cell" (dict "n" "impact" "l" "m" "p" 14 )}}
+        {{ partial "cell" (dict "n" "impact" "l" "p" "p" 15 )}}
+
+        {{ partial "cell" (dict "n" "impact" "l" "a" "p" 16 )}}
+        {{ partial "cell" (dict "n" "impact" "l" "c" "p" 17 )}}
+        {{ partial "cell" (dict "n" "impact" "l" "t" "p" 18 )}}
+        {{ partial "link" (dict "n" "contact" "l" "C" "p" 19 "url" $mail )}}
+        {{ partial "link" (dict "n" "contact" "l" "o" "p" 20 "url" $mail )}}
+
+        {{ partial "link" (dict "n" "contact" "l" "n" "p" 21 "url" $mail )}}
+        {{ partial "link" (dict "n" "contact" "l" "t" "p" 22 "url" $mail )}}
+        {{ partial "link" (dict "n" "contact" "l" "a" "p" 23 "url" $mail )}}
+        {{ partial "link" (dict "n" "contact" "l" "c" "p" 24 "url" $mail )}}
+        {{ partial "link" (dict "n" "contact" "l" "t" "p" 25 "url" $mail )}}
+
 </div>
 
 {{ end }}
 
 {{ define "script"}}
+
+{{ $jodd := "https://jodd.org" }}
+{{ $github := "https://github.com/igr" }}
+{{ $lin := "https://www.linkedin.com/in/igorspasic/" }}
+{{ $photos := "https://500px.com/igo_rs" }}
+{{ $razvigor := "https://razvigor.com" }}
+{{ $insta := "https://www.instagram.com/1g0r8" }}
+{{ $hs := "https://heapspace.rs" }}
+{{ $blog := "https://oblac.rs" }}
+
+
 <script type="text/javascript">
-var classSelected;
+
+function click(selected) {
+    if (selected === "code") {
+        addLinkToCell(5, "{{ $jodd }}", "Jodd");
+        addLinkToCell(9, "{{ $github }}", "GitHub");
+        addLinkToCell(15, "{{ $blog }}", "Blog");
+        addEmptyCells(19, 7);
+    }
+    if (selected == "work") {
+        addEmptyCells(1, 4);
+        addLinkToCell(9, "{{ $lin }}", "LinkedIn");
+        addLinkToCell(17, "{{ $github }}", "GitHub");
+        addEmptyCells(23, 3);
+    }
+    if (selected == "make") {
+        addEmptyCells(1, 2);
+        addLinkToCell(3, "{{ $photos }}", "Photos");
+        addLinkToCell(13, "{{ $photos }}", "Razvigor");
+        addLinkToCell(21, "{{ $insta }}", "Insta");
+    }
+    if (selected == "impact") {
+        addEmptyCells(1, 3);
+        addLinkToCell(4, "{{ $hs }}", "Heapspace");
+        addLinkToCell(18, "{{ $blog }}", "Blog");
+        addEmptyCells(22, 4);
+    }
+    hover('link');
+}
+function unclick() {
+    $('#grid div a').show();
+    $(".link").remove()
+}
+function addLinkToCell(id, href, string) {
+    for (var i = 0; i < string.length; i += 1) {
+        $('#p' + id + ' a').hide();
+        $('#p' + id).append("<a href='" + href + "' target='_blank' class='link' data-name='" + string + "'>" + string.charAt(i) + "</a>");
+        id += 1;
+    }
+}
+
+function addEmptyCells(id, count) {
+    for (var i = 0; i < count; i += 1) {
+        $('#p' + id + ' a').hide();
+        $('#p' + id).append("<span href='#' class='link nonselect'>&nbsp;</span>");
+        id += 1;
+    }
+}
 
 $(function() {
     // clicker
-    $('div.row div a').click(function() {
-        const box = $(this).parent();
-        const classClicked = box.attr('class');
-        if (box.hasClass(classSelected)) {
+    var nameSelected;
+    $('#grid a').click(function() {
+        const box = $(this);
+        const nameClicked = box.data('name');
+        if (nameClicked === nameSelected) {
             // unclick
-            $('.'+ classSelected).removeClass('selected');
-            classSelected = undefined;
+            $('#grid a').removeClass('selected');
+            nameSelected = undefined;
+            unclick();
         }
         else {
             // click
-            $('div.row div').removeClass('selected');
-            classSelected = classClicked;
-            $('.'+ classSelected).addClass('selected');
+            $('#grid a').removeClass('selected');
+            nameSelected = nameClicked;
+            $('a[data-name='+ nameSelected + ']').addClass('selected');
+            click(nameSelected);
         }
+        return false;
     });
 
     // hover
-	$('div.row div').mouseenter(function() {
-		const classHover = $(this).data('name');
-        console.log(classHover);
-		$('.'+ classHover +'> a').addClass('hov');
-	})
-	.mouseleave(function() {
-		$('div.row div > a').removeClass('hov');
-	});
+	hover();
 });
+
+function hover(aClass) {
+    const selector = aClass ? "#grid a." + aClass : "#grid a";
+    $(selector).mouseenter(function() {
+        const hoverName = $(this).data('name');
+        $('a[data-name=' + hoverName + ']').addClass('hov');
+    })
+    .mouseleave(function() {
+        $('#grid a').removeClass('hov');
+    });
+}
 </script>
 {{ end }}
