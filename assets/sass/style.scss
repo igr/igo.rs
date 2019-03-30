@@ -50,7 +50,7 @@ main {
   }
 }
 
-a, #grid span {
+a {
   display: block;
   padding: 1em 1.2em;
   color: $color-text;
@@ -74,8 +74,3 @@ a.selected {
   color: $color-selected-text;
 }
 
-@media (max-width: 480px) {
-    main {
-      font-size: 6vmin;
-    }
-}
