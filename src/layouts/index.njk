@@ -1,0 +1,145 @@
+{% extends "base.njk" %}
+{% import "macros.njk" as macros %}
+
+
+{% block main %}
+  {% set mail = "mailto:igor.spasic+hello@gmail.com" %}
+
+  <div id="grid">
+
+    {{ macros.cell(n="code", l="C", "p"=1 ) }}
+    {{ macros.cell(n="code", l="o", "p"=2 ) }}
+    {{ macros.cell(n="code", l="d", "p"=3 ) }}
+    {{ macros.cell(n="code", l="e", "p"=4 ) }}
+    {{ macros.cell(n="work", l="W", "p"=5 ) }}
+
+    {{ macros.cell(n="work", l="o", "p"=6 ) }}
+    {{ macros.cell(n="work", l="r", "p"=7 ) }}
+    {{ macros.cell(n="work", l="k", "p"=8 ) }}
+    {{ macros.cell(n="make", l="M", "p"=9 ) }}
+    {{ macros.cell(n="make", l="a", "p"=10 ) }}
+
+    {{ macros.cell(n="make", l="k", "p"=11 ) }}
+    {{ macros.cell(n="make", l="e", "p"=12 ) }}
+    {{ macros.cell(n="impact", l="I", "p"=13 ) }}
+    {{ macros.cell(n="impact", l="m", "p"=14 ) }}
+    {{ macros.cell(n="impact", l="p", "p"=15 ) }}
+
+    {{ macros.cell(n="impact", l="a", "p"=16 ) }}
+    {{ macros.cell(n="impact", l="c", "p"=17 ) }}
+    {{ macros.cell(n="impact", l="t", "p"=18 ) }}
+    {{ macros.link(n="contact", l="C", "p"=19, u=mail ) }}
+    {{ macros.link(n="contact", l="o", "p"=20, u=mail ) }}
+
+    {{ macros.link(n="contact", l="n", "p"=21, u=mail ) }}
+    {{ macros.link(n="contact", l="t", "p"=22, u=mail ) }}
+    {{ macros.link(n="contact", l="a", "p"=23, u=mail ) }}
+    {{ macros.link(n="contact", l="c", "p"=24, u=mail ) }}
+    {{ macros.link(n="contact", l="t", "p"=25, u=mail ) }}
+
+  </div>
+
+{% endblock %}
+{% block script %}
+
+  {% set jodd = "https://jodd.org" %}
+  {% set github = "https://github.com/igr" %}
+  {% set lin = "https://www.linkedin.com/in/igorspasic/" %}
+  {% set photos = "https://500px.com/igo_rs" %}
+  {% set razvigor = "https://razvigor.com" %}
+  {% set insta = "https://www.instagram.com/1g0r8" %}
+  {% set hs = "https://heapspace.rs" %}
+  {% set blog = "https://oblac.rs" %}
+
+
+<script type="text/javascript">
+
+  function click(selected) {
+    if (selected === "code") {
+      addLinkToCell(5, "{{ github }}", "GitHub");
+      addLinkToCell(11, "{{ jodd }}", "Jodd");
+      addLinkToCell(15, "{{ blog }}", "Blog");
+      addEmptyCells(19, 7);
+    }
+    if (selected === "work") {
+      addEmptyCells(1, 4);
+      addLinkToCell(9, "{{ lin }}", "LinkedIn");
+      addLinkToCell(17, "{{ github }}", "GitHub");
+      addEmptyCells(23, 3);
+    }
+    if (selected === "make") {
+      addEmptyCells(1, 2);
+      addLinkToCell(3, "{{ photos }}", "Photos");
+      addLinkToCell(13, "{{ razvigor }}", "Razvigor");
+      addLinkToCell(21, "{{ insta }}", "Insta");
+    }
+    if (selected === "impact") {
+      addEmptyCells(1, 3);
+      addLinkToCell(4, "{{ hs }}", "Heapspace");
+      addLinkToCell(19, "{{ blog }}", "Blog");
+      addEmptyCells(23, 3);
+    }
+    hover('link');
+  }
+
+  function unclick() {
+    $('#grid div a').show();
+    $(".link").remove()
+  }
+
+  function addLinkToCell(id, href, string) {
+    for (let i = 0; i < string.length; i += 1) {
+      $('#p' + id + ' a').hide();
+      $('#p' + id).append(`<a href='${href}' target='_blank' class='link' data-name='${string}'>${string.charAt(i)}</a>`);
+      id += 1;
+    }
+  }
+
+  function addEmptyCells(id, count) {
+    for (let i = 0; i < count; i += 1) {
+      $('#p' + id + ' a').hide();
+      $('#p' + id).append("<span href='#' class='link nonselect'>&nbsp;</span>");
+      id += 1;
+    }
+  }
+
+  $(function () {
+    // clicker
+    let nameSelected;
+    $('#grid a').click(function () {
+      const box = $(this);
+      const nameClicked = box.data('name');
+      if (nameClicked === nameSelected) {
+        // unclick
+        $('#grid a').removeClass('selected');
+        nameSelected = undefined;
+        unclick();
+      } else {
+        // click
+        $('#grid a').removeClass('selected');
+        nameSelected = nameClicked;
+        if (nameSelected === 'contact') {
+          return true;
+        }
+        $('a[data-name=' + nameSelected + ']').addClass('selected');
+        click(nameSelected);
+      }
+      return false;
+    });
+
+    // hover
+    hover();
+  });
+
+  function hover(aClass) {
+    const selector = aClass ? "#grid a." + aClass : "#grid a";
+    $(selector).mouseenter(function () {
+      const hoverName = $(this).data('name');
+      $('a[data-name=' + hoverName + ']').addClass('hov');
+    })
+      .mouseleave(function () {
+        $('#grid a').removeClass('hov');
+      });
+  }
+</script>
+{% endblock %}

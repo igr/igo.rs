@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+	<title>igo.rs</title>
+	<link href="/favicon.ico" rel="icon">
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:title" content="igo.rs">
+	<meta property="og:description" content="igor was here">
+	<meta property="og:url" content="{{ site.baseURL }}">
+	<meta property="og:site_name" content="IGO.RS">
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="{{ site.baseURL }}igors-og.png" />
+
+    <link rel='stylesheet' href='/css/main.css' type='text/css' media='all' />
+    <script
+			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+			crossorigin="anonymous"></script>
+</head>
+<body>
+	<main>
+    {% block main %}{% endblock %}
+	</main>
+  {% block script %}{% endblock %}
+</body>
+</html>

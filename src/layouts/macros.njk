@@ -1,0 +1,7 @@
+{% macro cell(n, p, l) %}
+  <div id="p{{ p }}"><a href="#{{ n }}" data-name="{{ n }}">{{ l }}</a></div>
+{% endmacro %}
+
+{% macro link(n, p, l, u) %}
+  <div id="p{{ p }}"><a href="{{ u }}" data-name="{{ n }}" target="_blank">{{ l }}</a></div>
+{% endmacro %}
