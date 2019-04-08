@@ -2,9 +2,11 @@
 
 const SpigConfig = require('./spig-config');
 const SpigFiles = require('./spig-files');
+const SpigVersion = require('./spig-version');
 const LayoutResolver = require('./layout-resolver');
 const Path = require('path');
 const glob = require('glob');
+const log = require('fancy-log');
 
 // system debug errors
 
@@ -14,15 +16,23 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 // functions
 
 const fn_frontmatter = require('./phase1/frontmatter');
-const fn_initAttributes = require('./phase1/initAttributes');
-const fn_folderize = require('./phase1/folderize');
+const fn_permalinks = require('./phase1/permalinks');
 const fn_slugish = require('./phase1/slugish');
-const fn_renameExt = require('./phase1/renameExtension');
-const fn_nunjucks = require('./phase2/nunjucks');
-const fn_markdown = require('./phase2/markdown');
-const fn_debug = require('./phase2/debug');
+const fn_rename = require('./phase1/rename');
+const fn_render_nunjucks = require('./phase2/render-nunjucks');
+const fn_template_nunjucks = require('./phase2/template-nunjucks');
+const fn_render_markdown = require('./phase2/render-markdown');
 const fn_imageMinify = require('./phase2/imageMinify');
 const fn_htmlMinify = require('./phase2/htmlMinify');
+const fn_excerpt = require('./phase2/excerpt');
+const fn_collect = require('./phase1/collect');
+
+
+log(`-=[Spig v${SpigVersion}]=-`);
+
+SpigConfig.configureEngines();
+
+let PHASES = [];
 
 class Spig {
 
@@ -33,7 +43,27 @@ class Spig {
     return new Spig(files);
   }
 
+  /**
+   * Predefines phases order.
+   */
+  static phases(arr) {
+    if (!arr) {
+      return PHASES;
+    }
+    PHASES = arr;
+  }
+
   constructor(files) {
+    this.tasks = {};
+    this.out = SpigConfig.siteConfig.outDir;
+    this.dev = process.env.NODE_ENV !== 'production';
+
+    this.tasks = {};
+    for (const p of PHASES) {
+      this.tasks[p] = [];
+    }
+
+
     const site = SpigConfig.siteConfig;
     let filePatterns;
 
@@ -48,21 +78,32 @@ class Spig {
     }
 
     // file names
-    let allFiles = [];
+    this.allFiles = [];
     for (const pattern of filePatterns) {
-      allFiles = allFiles.concat(glob.sync(pattern));
+      this.allFiles = this.allFiles.concat(glob.sync(pattern));
     }
 
-    for (const fileName of allFiles) {
+    this.load();
+  }
+
+  load() {
+    for (const fileName of this.allFiles) {
       this.addFile(fileName);
     }
 
-    this.tasks = {
-      1: [],
-      2: []
-    };
-    this.out = site.outDir;
-    this.dev = process.env.NODE_ENV !== 'production';
+  }
+
+  /**
+   * Starts the current phase.
+   * If phase is not register it will be added to the end of phases!
+   */
+  _(val) {
+    if (!this.tasks[val]) {
+      this.tasks[val] = [];
+      PHASES.push(val);
+    }
+    this.currentPhase = val;
+    return this;
   }
 
   /**
@@ -72,20 +113,20 @@ class Spig {
     if (value) {
       const fo = SpigFiles.createFileObject(fileName, {virtual: true});
       fo.spig = this;
-      fo.contents = Buffer.from(value);
+      fo.contents = value;
       return fo;
     }
+
     const fo = SpigFiles.createFileObject(fileName);
     fo.spig = this;
-
     return fo;
   }
 
   /**
    * Uses generic function to manipulate files.
    */
-  use(phase, fn) {
-    this.tasks[phase].push(fn);
+  use(fn) {
+    this.tasks[this.currentPhase].push(fn);
     return this;
   }
 
@@ -93,7 +134,10 @@ class Spig {
    * Iterate all tasks of given phase.
    */
   forEachTask(phase, fn) {
-    this.tasks[phase].forEach(fn);
+    const tasks = this.tasks[phase];
+    if (tasks) {
+      tasks.forEach(fn);
+    }
     return this;
   }
 
@@ -103,52 +147,46 @@ class Spig {
    * @see fn_frontmatter
    */
   frontmatter(attributes = {}) {
-    return this.use(1, (file) => fn_frontmatter(file, attributes));
-  }
-
-  /**
-   * @see fn_debug
-   */
-  debug() {
-    return this.use(2, fn_debug);
+    return this.use((file) => fn_frontmatter(file, attributes));
   }
 
   initPage() {
-    return this.use(1, (file) => fn_initAttributes(file, {page: true}));
+    return this.use((file) => file.page = true);
   }
 
   initAsset() {
-    return this.use(1, (file) => fn_initAttributes(file, {page: false}));
+    return this.use((file) => file.page = false);
   }
 
   /**
-   * @see fn_folderize
+   * @see fn_permalinks
    */
-  folderize() {
-    return this.use(1, (file) => fn_folderize(file));
+  permalinks() {
+    return this.use((file) => fn_permalinks(file));
   }
 
   /**
    * @see fn_slugish
    */
   slugish() {
-    return this.use(1, (file) => fn_slugish(file));
+    return this.use((file) => fn_slugish(file));
   }
 
   /**
    * Collects pages by given attribute name.
    */
   collect(attribute) {
-    // avoid circular dependencies
-    const fn_collect = require('./phase1/collect');
-    return this.use(1, (file) => fn_collect(file, attribute));
+    return this.use((file) => fn_collect(this, file, attribute));
   }
 
   /**
    * @see fn_imageMinify
    */
   imageMinify(options) {
-    return this.use(2, (file) => fn_imageMinify(file, options));
+    if (!SpigConfig.devConfig.production) {
+      return this;
+    }
+    return this.use((file) => fn_imageMinify(file, options));
   }
 
 
@@ -157,15 +195,15 @@ class Spig {
   /**
    * @see fn_renameExt
    */
-  as(extension) {
-    return this.use(1, (file) => fn_renameExt(file, extension));
+  rename(fn) {
+    return this.use((file) => fn_rename(file, fn));
   }
 
   /**
-   * @see as
+   * Renames extension to HTML.
    */
   asHtml() {
-    return this.as('.html');
+    return this.rename(path => path.extname = '.html');
   }
 
   // --- render & template ---
@@ -176,33 +214,35 @@ class Spig {
   pageCommon() {
     return this
       .initPage()
-      .folderize()
+      .permalinks()
       .frontmatter()
       .slugish()
-      .asHtml();
+      .asHtml()
+      ;
   }
 
   /**
-   * Shortcut for common images initialization.
+   * Shortcut for common asset initialization.
    */
-  imagesCommon() {
+  assetCommon() {
     return this
       .initAsset()
-      .slugish();
+      .slugish()
+      ;
   }
 
   /**
    * Renders a file using render engine determined by its extension.
    */
   render() {
-    return this.use(2, (file) => {
+    return this.use((file) => {
       const ext = Path.extname(file.path);
       switch (ext) {
         case '.njk':
-          fn_nunjucks.render(file);
+          fn_render_nunjucks(file);
           break;
         case '.md':
-          fn_markdown(file);
+          fn_render_markdown(file);
           break;
       }
     });
@@ -212,16 +252,16 @@ class Spig {
    * Applies a template using template engine determined by layout extension.
    */
   applyTemplate() {
-    return this.use(2, (file) => {
+    return this.use((file) => {
       const layout = LayoutResolver(file);
 
       const ext = Path.extname(layout);
       switch (ext) {
         case '.njk':
-          fn_nunjucks.apply(file, layout);
+          fn_template_nunjucks(file, layout);
           break;
         default:
-          throw new Error("Unknown template engine.");
+          throw new Error("Unknown template engine for " + ext);
       }
     });
   }
@@ -231,7 +271,17 @@ class Spig {
    * @see fn_htmlMinify
    */
   htmlMinify(options) {
-    return this.use(2, file => fn_htmlMinify(file, options));
+    if (!SpigConfig.devConfig.production) {
+      return this;
+    }
+    return this.use(file => fn_htmlMinify(file, options));
+  }
+
+  /**
+   * Reads summary.
+   */
+  summary() {
+    return this.use(file => fn_excerpt((file)));
   }
 
 }

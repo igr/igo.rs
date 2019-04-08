@@ -2,12 +2,25 @@
 
 const Path = require("path");
 const SpigConfig = require('./spig-config');
+const initAttributes = require('./init-attributes');
+
+function permalink(link) {
+  if (link.endsWith('index.html')) {
+    return link.substr(0, link.length - 10);
+  }
+  return link;
+}
 
 class SpigFiles {
 
   constructor() {
     this.files = [];
-    this.defaultFileKeys = ['src', 'name', 'basename', 'path', 'out', 'dir', 'contents', 'attr', 'spig'];
+    this.map = {};
+  }
+
+  reset() {
+    this.files = [];
+    this.map = {};
   }
 
   /**
@@ -29,44 +42,13 @@ class SpigFiles {
       path = '/' + Path.relative(site.root + site.srcDir + site.dirSite, absolutePath);
     }
 
-    let dirName = Path.dirname(path);
-    dirName = (dirName === '/' ? dirName : dirName + '/');
+    const fileObject = this.createMeta(absolutePath, path);
 
-    const fileObject = this.createMeta(absolutePath, dirName, path);
+    initAttributes(fileObject);
 
     this.files.push(fileObject);
 
     return fileObject;
-  }
-
-  // ATTRIBUTES
-
-  /**
-   * Resolves file attribute or meta value.
-   */
-  attr(file, name) {
-    if (file.attr) {
-      const value = file.attr[name];
-      if (value) {
-        return value;
-      }
-    }
-    return file[name];
-  }
-
-  /**
-   * Updates file attributes.
-   */
-  updateAttr(file, data) {
-    if (!file.attr) {
-      file.attr = data;
-      return;
-    }
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        file.attr[key] = data[key];
-      }
-    }
   }
 
   // META
@@ -74,50 +56,39 @@ class SpigFiles {
   /**
    * Creates basic set of meta data for the file.
    */
-  createMeta(absolutePath, dirName, path) {
-    return {
+  createMeta(absolutePath, path) {
+    let dirName = Path.dirname(path);
+    dirName = (dirName === '/' ? dirName : dirName + '/');
+
+    const id = dirName + Path.basename(path, Path.extname(path));
+
+    const meta = {
       src: absolutePath,
       basename: Path.basename(path, Path.extname(path)),
-      name: dirName + Path.basename(path, Path.extname(path)),
-      path: path,
-      out: path,
       dir: dirName,
+      name: Path.basename(path),
+      id: id,
+      path: path,
+
+      out: path,
       contents: undefined,
       attr: {}
     };
+
+    if (id === '/index') {
+      meta.attr.home = true;
+    }
+
+    this.map[id] = meta;
+
+    return meta;
   }
 
   /**
-   * Resets all metadata for the file.
+   * Lookups the file object by its ID.
    */
-  resetMeta(file) {
-    if (file.src) {
-      file.contents = undefined;
-    }
-
-    file.attr = {};
-
-    for (const key in file) {
-      if (!file.hasOwnProperty(key)) {
-        continue;
-      }
-      if (!this.defaultFileKeys.includes(key)) {
-        delete file[key];
-      }
-    }
-
-  }
-
-  /**
-   * Updates file meta data.
-   * Use with care as important system values may be overwritten.
-   */
-  updateMeta(file, data) {
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        file[key] = data[key];
-      }
-    }
+  lookup(id) {
+    return this.map[id];
   }
 
   // CONTEXT
@@ -127,16 +98,28 @@ class SpigFiles {
    */
   contextOf(file) {
     const site = SpigConfig.siteConfig;
-    return {
+    const purl = permalink(file.out);
+    const fo = {
       content: file.contents,
+      plain: file.plain,
       site: site,
-      collections: site.collections,
-      page: file.attr,
-      url: file.out
+      url: purl,
+      link: site.baseURL + purl,
+      src: file.dir + file.name,
     };
+
+    return {...file.attr, ...fo};
   }
 
-
+  /**
+   * Returns file content as String and replaces the buffer.
+   */
+  stringContents(file) {
+    if (typeof file.contents === 'string') {
+      return file.contents;
+    }
+    return file.contents.toString();
+  }
 }
 
 module.exports = new SpigFiles();
