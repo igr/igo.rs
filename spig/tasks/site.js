@@ -37,13 +37,13 @@ const runTask = (task, file) => {
  * Resets all metadata and configuration to avoid accumulation on reloading.
  */
 const reset = () => {
-  const collections = SpigConfig.siteConfig.collections;
+  const collections = SpigConfig.site.collections;
   Object.keys(collections).forEach(key => {
-    delete SpigConfig.siteConfig[key];
+    delete SpigConfig.site[key];
   });
 
-  SpigConfig.siteConfig.collections = {};
-  SpigConfig.siteConfig.buildTime = new Date();
+  SpigConfig.site.collections = {};
+  SpigConfig.site.buildTime = new Date();
 
   const allSpigs = [];
   for (const file of SpigFiles.files) {
@@ -83,7 +83,7 @@ const runPhase = (phaseNo) => {
  * Collects all pages.
  */
 const collectAllPages = () => {
-  const site = SpigConfig.siteConfig;
+  const site = SpigConfig.site;
   site.pages = [];
   for (const file of SpigFiles.files) {
     if (file.page) {
@@ -142,11 +142,13 @@ function logline() {
 const writeAllFiles = () => {
   logline();
   for (const file of SpigFiles.files) {
-    const site = SpigConfig.siteConfig;
+    const dev = SpigConfig.dev;
     const out = file.out;
-    const dest = Path.normalize(site.root + site.outDir + out);
+    const dest = Path.normalize(dev.root + dev.outDir + out);
 
-    fs.mkdirSync(Path.dirname(dest), {recursive: true});
+    if (!fs.existsSync(Path.dirname(dest))) {
+      fs.mkdirSync(Path.dirname(dest), {recursive: true});
+    }
 
     if (typeof file.contents === 'string') {
       file.contents = Buffer.from(file.contents);
@@ -157,7 +159,7 @@ const writeAllFiles = () => {
       log(chalk.green(out) + " <--- " + chalk.blue(file.path));
     }
   }
-  const pageCount = SpigConfig.siteConfig.pages.length;
+  const pageCount = SpigConfig.site.pages.length;
   if (pageCount !== 0) {
     logline();
   }

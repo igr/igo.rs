@@ -3,17 +3,40 @@
 const log        = require("fancy-log");
 const fs         = require("fs");
 const chalk      = require("chalk");
+const glob       = require("glob");
 
 const siteDefaults = {
-  name:    'spig site',
+  name: 'Spig Site',
   baseURL: 'http://localhost:3000',
   version: '1.0.0',
 
-  // main folders
-  srcDir:       './src',
-  outDir:       './out',
+  // environment
+  env: process.env,
 
-  // relative folders
+  // production or development mode
+  production: false,
+
+  assets: {},
+
+  // data folder
+  data: {},
+
+  // stats
+  buildTime: new Date(),
+
+  // pages
+  pages: [],
+
+  // collections
+  collections: {}
+};
+
+const devDefaults = {
+
+  // source root folder
+  srcDir:       './src',
+
+  // relative source folders
   dirSite:      '/site',
   dirImages:    '/images',
   dirJs:        '/js',
@@ -22,18 +45,17 @@ const siteDefaults = {
   dirStatic:    '/static',
   dirLayouts:   '/layouts',
 
-  buildTime: new Date(),
+  // output root folder
+  outDir:       './out',
 
-  pages: [],
-  collections: {}
-};
+  // relative output folders
+  dirJsOut:     '/js',
+  dirCssOut:    '/css',
 
-const developmentDefaults = {
-  // production or development mode
-  production: false,
-
-  // environment variables
-  env: process.env,
+  // names
+  names: {
+    bundle_js: 'main.js'
+  },
 
   // images to be resized
   resizeImageSizes: [400, 1000],
@@ -46,42 +68,98 @@ const developmentDefaults = {
     default: 'base'
   },
 
+  // extensions to be rendered
+  render: [
+    "**/*.md"
+  ],
+
+  jsUseBabel: false,
+
+  supportedBrowsers: [
+    'last 3 versions', // http://browserl.ist/?q=last+3+versions
+    'ie >= 10', // http://browserl.ist/?q=ie+%3E%3D+10
+    'edge >= 12', // http://browserl.ist/?q=edge+%3E%3D+12
+    'firefox >= 28', // http://browserl.ist/?q=firefox+%3E%3D+28
+    'chrome >= 21', // http://browserl.ist/?q=chrome+%3E%3D+21
+    'safari >= 6.1', // http://browserl.ist/?q=safari+%3E%3D+6.1
+    'opera >= 12.1', // http://browserl.ist/?q=opera+%3E%3D+12.1
+    'ios >= 7', // http://browserl.ist/?q=ios+%3E%3D+7
+    'android >= 4.4', // http://browserl.ist/?q=android+%3E%3D+4.4
+    'blackberry >= 10', // http://browserl.ist/?q=blackberry+%3E%3D+10
+    'operamobile >= 12.1', // http://browserl.ist/?q=operamobile+%3E%3D+12.1
+    'samsung >= 4', // http://browserl.ist/?q=samsung+%3E%3D+4
+  ]
+
 };
 
 
 class SpigConfig {
   constructor() {
-    // update site configuration
-    let site = siteDefaults;
+    // read and update development configuration
 
-    if (fs.existsSync('./src/site.json')) {
-      log("Reading " + chalk.magenta("site.json"));
-      const siteJson = JSON.parse(fs.readFileSync('./src/site.json'));
-      site = {...site, ...siteJson};
-    }
+    let dev = devDefaults;
 
-    site.root = process.cwd() + '/';
+    const devJsonFile = dev.srcDir + '/dev.json';
 
-    this.siteConfig = site;
-
-    // update development configuration
-
-    let dev = developmentDefaults;
-
-    if (fs.existsSync('./src/dev.json')) {
+    if (fs.existsSync(devJsonFile)) {
       log("Reading " + chalk.magenta("dev.json"));
-      const devJson = JSON.parse(fs.readFileSync('./src/dev.json'));
+      const devJson = JSON.parse(fs.readFileSync(devJsonFile));
       dev = {...dev, ...devJson};
     }
 
-    this.devConfig = dev;
+    dev.root = process.cwd() + '/';
+
+    this.dev = dev;
+
+
+    // read and update site configuration
+
+    let site = siteDefaults;
+
+    const siteJsonFile = dev.srcDir + '/site.json';
+
+    if (fs.existsSync(siteJsonFile)) {
+      log("Reading " + chalk.magenta("site.json"));
+      const siteJson = JSON.parse(fs.readFileSync(siteJsonFile));
+      site = {...site, ...siteJson};
+    }
+
+    this.site = site;
+
+    site.dev = this.dev;
+
+    // data
+
+    log("Reading " + chalk.magenta(dev.dirData));
+
+    const dataRoot = dev.srcDir + dev.dirData + "/";
+    const dataFiles = glob.sync(dataRoot + "/**/*.json");
+    for (const f of dataFiles) {
+      let target = site.data;
+      const file = f.substr(dataRoot.length);
+      const chunks = file.split("/");
+      for (const chunk of chunks) {
+        if (chunk.endsWith(".json")) {
+          // file located
+          const dataJson = JSON.parse(fs.readFileSync(dataRoot + file));
+          target[chunk.substr(0, chunk.length - 5)] = dataJson;
+        }
+        else {
+          // go one folder deeper
+          if (!target[chunk]) {
+            target[chunk] = {};
+          }
+          target = target[chunk];
+        }
+      }
+    }
 
     // production mode
 
-    if (dev.env.SPIG_PRODUCTION) {
-      dev.production = dev.env.SPIG_PRODUCTION;
+    if (site.env.SPIG_PRODUCTION) {
+      site.production = site.env.SPIG_PRODUCTION;
     }
-    if (dev.production === 'false' || dev.production === false) {
+    if (site.production === 'false' || site.production === false) {
       log('Environment: ' + chalk.green('DEVELOPMENT'));
       site.baseURL = 'http://localhost:3000';
     } else {
@@ -93,14 +171,14 @@ class SpigConfig {
    * Configure all engines from source folder.
    */
   configureEngines() {
-    if (fs.existsSync(this.siteConfig.srcDir + '/markdown.js')) {
+    if (fs.existsSync(this.dev.srcDir + '/markdown.js')) {
       log("Reading " + chalk.magenta("markdown.js"));
-      this.markdown(require('../' + this.siteConfig.srcDir + '/markdown'));
+      this.markdown(require('../' + this.dev.srcDir + '/markdown'));
     }
 
-    if (fs.existsSync(this.siteConfig.srcDir + '/nunjucks.js')) {
+    if (fs.existsSync(this.dev.srcDir + '/nunjucks.js')) {
       log("Reading " + chalk.magenta("nunjucks.js"));
-      this.nunjucks(require('../' + this.siteConfig.srcDir + '/nunjucks'));
+      this.nunjucks(require('../' + this.dev.srcDir + '/nunjucks'));
     }
   }
 
