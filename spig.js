@@ -1,27 +1,28 @@
-"use strict";
+const { Spig } = require('spignite');
 
-const Spig = require('./spig/spig');
-require('require-dir')('./spig/tasks');
+Spig.hello();
 
 Spig
   .on('/**/*.{md,njk}')
+
   ._("INIT")
   .pageCommon()
-  .collect('tags')
+  .tags()
+
   ._("RENDER")
   .render()
   .applyTemplate()
   .htmlMinify()
 ;
 
-
-// IMAGES
-
 Spig
   .on('/**/*.{png,jpg,gif}')
+
   ._("INIT")
   .assetCommon()
+
   ._("IMG")
   .imageMinify()
 ;
 
+Spig.run();
