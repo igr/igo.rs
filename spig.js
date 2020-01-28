@@ -6,7 +6,8 @@ Spig
   .on('/**/*.{md,njk}')
 
   ._("INIT")
-  .pageCommon()
+  .pageMeta()
+  .pageLinks()
   .tags()
 
   ._("RENDER")
@@ -19,7 +20,7 @@ Spig
   .on('/**/*.{png,jpg,gif}')
 
   ._("INIT")
-  .assetCommon()
+  .assetLinks()
 
   ._("IMG")
   .imageMinify()
