@@ -75,3 +75,8 @@ a.selected {
   color: $color-selected-text;
 }
 
+@media (max-width:600px) {
+  main {
+    font-size: 5vmin;
+  }
+}
