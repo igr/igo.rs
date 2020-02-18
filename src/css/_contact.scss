@@ -1,0 +1,17 @@
+#mail {
+  width: 100%;
+  font-size: 2em;
+  font-weight:bold;
+}
+
+#info {
+  grid-column: 1 / span 3;
+  font-size: 0.4em;
+  visibility: hidden;
+}
+
+@media (max-width:600px) {
+  #mail {
+    font-size: 8vmin;
+  }
+}

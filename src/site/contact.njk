@@ -1,0 +1,121 @@
+{% block main %}
+  <div id="mail"><span>hello</span>@igo.rs</div>
+  <div id="grid" style="grid-template-columns: 1fr 1fr 1fr; margin-top:20px;">
+    <a id='rnd' href="#" title="Random">∞</a>
+    <a id='waaat' href="#" title="Waaat is this?">i</a>
+    <a id='mailto' href="#" title="Mail me!">➤</a>
+    <div id="info">Choose how you would like to contact me.<br>Use random name. Pick your own. It's up to you!<br>Be creative.</div>
+  </div>
+{% endblock %}
+
+
+{% block script %}
+<script type="text/javascript">
+const ALL_WORDS = [
+  'app',
+  'awww',
+  'batman',
+  'c0der',
+  'ciao',
+  'climb',
+  'cool',
+  'dev',
+  'endless',
+  'foo',
+  'fight',
+  'friday',
+  'gmail',
+  'guru',
+  'hello',
+  'hey',
+  'hi',
+  'i.am',
+  'idea',
+  'john.doe',
+  'loop',
+  'mail',
+  'me',
+  'monad',
+  'mr.no',
+  'null',
+  'rock',
+  'sexy',
+  'smile',
+  'sr.ogi',
+  'sun',
+  'supr',
+  'supr.life',
+  'surfer',
+  'unicorn',
+  'www',
+  'zombie',
+  'discuss',
+  'love.you',
+  'kick.ass',
+  'super.star',
+  'pinball',
+  'love',
+  'i',
+  'who',
+  'dot',
+  'at',
+  ''
+];
+
+var words = [''];
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function randomWords(wordCount) {
+  return shuffle(ALL_WORDS).slice(0, wordCount);
+}
+
+function kaboom(words, maxTime) {
+  const dest = $('#mail span');
+
+  for (let i = 0; i < words.length; i += 1) {
+    const ratio = (i + 1) / words.length;
+    const time = ratio * (ratio - ratio/3) * maxTime;
+    setTimeout(() => { dest.html(words[i]); }, time);
+  }
+}
+
+  $(function () {
+    const dest = $('#mail span');
+    const info = $('#info');
+
+    kaboom(randomWords(4).concat('hello'), 1000);
+    $('#rnd').click(() => kaboom(randomWords(5), 1000));
+    $('#waaat').click(() => {
+      if (info.css('visibility') === 'hidden' ) {
+        info.css('visibility','visible');
+      } else {
+        info.css('visibility','hidden');
+      }
+    });
+    $('#mailto').click((event) => {
+        event.preventDefault();
+        const email = dest.html() + '@igo.rs';
+        window.location = 'mailto:' + email;
+    })
+  });
+
+</script>
+{% endblock %}

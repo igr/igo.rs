@@ -39,7 +39,7 @@
 </head>
 <body>
 	<main>
-    {% block main %}{% endblock %}
+    {% block main %}{{ content | safe }}{% endblock %}
 	</main>
   {% block script %}{% endblock %}
 </body>
