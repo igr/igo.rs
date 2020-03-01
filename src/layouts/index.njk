@@ -46,6 +46,7 @@
   {% set github = "https://github.com/igr" %}
   {% set lin = "https://www.linkedin.com/in/igorspasic/" %}
   {% set photos = "https://500px.com/igo_rs" %}
+  {% set serbiais = "https://serbia.is" %}
   {% set razvigor = "https://razvigor.com" %}
   {% set zdrum = "https://zdrum.work" %}
   {% set insta = "https://igornagram.com/" %}
@@ -72,7 +73,9 @@
     if (selected === "make") {
       addEmptyCells(1, 2);
       addLinkToCell(3, "{{ photos }}", "Ṗ");
-      addEmptyCells(4, 5);
+      addEmptyCells(4, 3);
+      addLinkToCell(7, "{{ serbiais }}", "б");
+      addEmptyCells(8, 1);
       // make
       addEmptyCells(13, 1);
       addLinkToCell(14, "{{ razvigor }}", "Ṝ");
