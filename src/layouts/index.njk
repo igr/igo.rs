@@ -57,6 +57,30 @@
 
 <script type="text/javascript">
 
+  function pushHash(hashName) {
+    if (history.replaceState) {
+      history.replaceState(null, null, '#' + hashName);
+    } else {
+      location.hash = '#' + hashName;
+    }
+  }
+  function removeHash () {
+    var scrollV, scrollH, loc = window.location;
+    if ("pushState" in history)
+      history.pushState("", document.title, loc.pathname + loc.search);
+    else {
+      // Prevent scrolling by storing the page's current scroll offset
+      scrollV = document.body.scrollTop;
+      scrollH = document.body.scrollLeft;
+
+      loc.hash = "";
+
+      // Restore the scroll offset, should be flicker free
+      document.body.scrollTop = scrollV;
+      document.body.scrollLeft = scrollH;
+    }
+  }
+
   function click(selected) {
     if (selected === "code") {
       addLinkToCell(5, "{{ github }}", "GitHub");
@@ -93,12 +117,14 @@
       addLinkToCell(19, "{{ blog }}", "Blog");
       addEmptyCells(23, 3);
     }
+    pushHash(selected);
     hover('link');
   }
 
   function unclick() {
     $('#grid div a').show();
-    $(".link").remove()
+    $(".link").remove();
+    removeHash();
   }
 
   function addLinkToCell(id, href, string) {
@@ -143,6 +169,12 @@
 
     // hover
     hover();
+
+    // select hash
+    const hash = location.hash.substr(1);
+    if (hash) {
+      $("#grid a[data-name|=" + hash + "]").first().click();
+    }
   });
 
   function hover(aClass) {

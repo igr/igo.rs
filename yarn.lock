@@ -7000,10 +7000,10 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.5.tgz#3694b5804567a458d3c8045842a6358632f62654"
   integrity sha512-J+FWzZoynJEXGphVIS+XEh3kFSjZX/1i9gFBaWQcB+/tmpe2qUsSBABpcxqxnAxFdiUFEgAX1bjYGQvIZmoz9Q==
 
-spignite@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/spignite/-/spignite-2.0.7.tgz#5890adbba78505dd8378a8e547152ce04d668db2"
-  integrity sha512-wPtmZ62e2XdptkP5VrHyD039t5wK3q8aX5NAhjaW2OqLmNJuHKrJQaJ2SMBMYK7MQBU6reCZ3f8jbZHWa21jIg==
+spignite@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/spignite/-/spignite-2.0.8.tgz#a59ea66a8655aaf4c80a2a606f24dae248737e94"
+  integrity sha512-dzs72cGAr2QqHE1R1oz9p7BrDYi5h7hKmOD+13gbF8NjJ+Ee4L5IZQSEKtVyp3fUN7cxs1d7OMoNb8vxNHD7Lg==
   dependencies:
     "@babel/core" "^7.8.4"
     "@babel/preset-env" "^7.8.4"

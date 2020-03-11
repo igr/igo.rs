@@ -64,6 +64,15 @@ a {
   }
 }
 
+@media (hover: none) and (pointer: coarse) {
+  // disable hover on devices
+  a {
+    &.hov, &:hover {
+      color: $color-text;
+    }
+  }
+}
+
 .nonselect {
     user-select: none;
     -webkit-user-select: none;
