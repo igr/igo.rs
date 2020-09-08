@@ -21,13 +21,13 @@
 
     {{ macros.cell(n="make", l="k", "p"=11 ) }}
     {{ macros.cell(n="make", l="e", "p"=12 ) }}
-    {{ macros.cell(n="impact", l="I", "p"=13 ) }}
-    {{ macros.cell(n="impact", l="m", "p"=14 ) }}
-    {{ macros.cell(n="impact", l="p", "p"=15 ) }}
+    {{ macros.cell(n="affect", l="A", "p"=13 ) }}
+    {{ macros.cell(n="affect", l="f", "p"=14 ) }}
+    {{ macros.cell(n="affect", l="f", "p"=15 ) }}
 
-    {{ macros.cell(n="impact", l="a", "p"=16 ) }}
-    {{ macros.cell(n="impact", l="c", "p"=17 ) }}
-    {{ macros.cell(n="impact", l="t", "p"=18 ) }}
+    {{ macros.cell(n="affect", l="e", "p"=16 ) }}
+    {{ macros.cell(n="affect", l="c", "p"=17 ) }}
+    {{ macros.cell(n="affect", l="t", "p"=18 ) }}
     {{ macros.link(n="contact", l="C", "p"=19, u=mail ) }}
     {{ macros.link(n="contact", l="o", "p"=20, u=mail ) }}
 
@@ -118,7 +118,7 @@
       //addEmptyCells(23, 2);
       addLinkToCell(25, "{{ noodd }}", "ñ");
     }
-    if (selected === "impact") {
+    if (selected === "affect") {
       addEmptyCells(1, 3);
       addLinkToCell(4, "{{ hs }}", "Heapspace");
       addLinkToCell(19, "{{ blog }}", "Blog");
