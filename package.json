@@ -1,6 +1,6 @@
 {
   "name": "igo.rs",
-  "version": "2.2.3",
+  "version": "2.3.2",
   "description": "igo.rs",
   "scripts": {
     "clean": "rm -rf out",
@@ -16,6 +16,6 @@
   "license": "MIT",
   "homepage": "https://oblac.rs",
   "dependencies": {
-    "spignite": "^2.2.3"
+    "spignite": "^2.3.2"
   }
 }

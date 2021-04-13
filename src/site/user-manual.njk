@@ -1,0 +1,91 @@
+{% block main %}
+  <div id="fullpage">
+    <div class="section">
+      <h1>My User Manual</h1>
+    </div>
+
+    <div class="section">
+      <h2>Working Conditions</h2>
+      <p>I like working in an honest, safe space where anyone can share what they think.</p>
+      <p>I like to make an impact, take significant, creative risks, own and solve unique problem areas.</p>
+      <p>I work async: sometimes I’m responsive; other times I’m not.</p>
+      <p>Need personal space, natural light, and fresh air.</p>
+    </div>
+
+    <div class="section">
+      <h2>Working Hours</h2>
+      <p>I make my work time work around my life.</p>
+      <p>I like to keep all my meeting times in a set window to focus more throughout the day.</p>
+      <p>Sometimes I overwork, get unfocused, and burn myself out.</p>
+    </div>
+
+    <div class="section">
+      <h2>On Feedback</h2>
+      <p>I want to hear it all, face-to-face. Just be straight with me. I don’t know everything.</p>
+      <p>I like feedback that is radically honest, specific, timely (instant), and constructive. Examples can be super helpful.</p>
+      <p>Feedback is about coming from a place where we value each other, our relationship and want to help each other.</p>
+    </div>
+
+    <div class="section">
+      <h2>What I Need</h2>
+      <p>To learn constantly, growing and developing my own set of skills.</p>
+      <p>I need time to reflect.</p>
+      <p>Authenticity - I find it really hard to be around bullsh*t, inconsistency, or incongruence.</p>
+      <p>Candor, focus, empathy and values.</p>
+    </div>
+
+    <div class="section">
+      <h2>How I Learn</h2>
+      <p>I learn through doing.</p>
+      <p>Learning from others on what’s worked, exchanging ideas, and adopting and applying it with my unique spin.</p>
+      <p>I learn best when I operate just slightly outside of my comfort zone.</p>
+    </div>
+
+    <div class="section">
+      <h2>Things I Struggle With</h2>
+      <p>Taking on too many things in parallel to feel busy or doing more.</p>
+      <p>Frustration when seeing problems in my area, but I feel like I cannot control or not supported to make change.</p>
+      <p>If I don’t understand the wider purpose behind why we are doing something, I find it hard to engage with.</p>
+      <p>Unnecessary process. I like minimum-viable-process: what is enough for the team's size, the type of project, the types of people, and the types of outputs looking to be created.</p>
+    </div>
+
+    <div class="section">
+      <h2>I Love</h2>
+      <p>Connecting up the dots of what we are doing.</p>
+      <p>Communication, organization, and optimization.</p>
+      <p>A generative, risk-taking culture that has a flag in the ground about what it stands for.</p>
+      <p>Actions speak way more than words in my book.</p>
+      <p>Freedom to work on what, when and where I want.</p>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+<style>
+#fullpage .section p {
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: left;
+}
+#fullpage h1 {
+  font-size: 3em;
+}
+</style>
+<script type="text/javascript" src="/foo.js"></script>
+<link rel="stylesheet" type="text/css" href="/fullpage.min.css" />
+<script type="text/javascript" src="/fullpage.min.js"></script>
+<script type="text/javascript">
+ready(() => {
+  new fullpage('#fullpage', {
+    licenseKey: "OPEN-SOURCE-GPLV3-LICENSE",
+    licenseKey: '0C39A97C-ABF04D7A-8564CE11-E3142A4B',
+    autoScrolling: true,
+    navigation: true,
+    navigationPosition: 'right',
+    verticalCentered: true,
+    anchors: ['', '1', '2', '3', '4', '5', '6', '7']
+  });
+});
+</script>
+{% endblock %}

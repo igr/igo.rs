@@ -42,12 +42,12 @@
 {% endblock %}
 {% block script %}
 
+  {% set usermanual = "/user-manual" %}
   {% set jodd = "https://jodd.org" %}
   {% set github = "https://github.com/igr" %}
   {% set lin = "https://www.linkedin.com/in/igorspasic/" %}
   {% set photos = "https://www.igrpx.com" %}
   {% set bgde = "https://bgde.rs" %}
-  {% set napisao = "https://napisao.com" %}
   {% set razvigor = "https://razvigor.com" %}
   {% set zdrum = "https://zdrum.work" %}
   {% set insta = "https://igornagram.com/" %}
@@ -55,7 +55,7 @@
   {% set blog = "https://oblac.rs" %}
   {% set supr = "https://supr.life" %}
   {% set edu = "https://oblacodemia.com" %}
-  {% set noodd = "https://noodd.com" %}
+  {% set noodd = "https://noodd.com" %}s
   {% set oblac = "https://oblac.com" %}
   {% set kometa = "https://comet.oblac.com" %}
 
@@ -98,14 +98,13 @@
       addLinkToCell(2, "{{ edu }}", "Edu");
       // work
       addLinkToCell(9, "{{ lin }}", "LinkedIn");
-      addLinkToCell(17, "{{ github }}", "GitHub");
+      addLinkToCell(17, "{{ usermanual }}", "Manual");
       addEmptyCells(23, 3);
     }
     if (selected === "make") {
       addEmptyCells(1, 2);
       addLinkToCell(3, "{{ photos }}", "Ṗ");
-      addEmptyCells(4, 2);
-      addLinkToCell(6, "{{ napisao }}", "§");
+      addEmptyCells(4, 3);
       addLinkToCell(7, "{{ bgde }}", "б");
       addEmptyCells(8, 1);
       // make
