@@ -58,6 +58,7 @@
   {% set noodd = "https://noodd.com" %}s
   {% set oblac = "https://oblac.com" %}
   {% set kometa = "https://comet.oblac.com" %}
+  {% set bc = "https://igo.rs/bc" %}
 
 
 <script type="text/javascript">
@@ -99,7 +100,8 @@
       // work
       addLinkToCell(9, "{{ lin }}", "LinkedIn");
       addLinkToCell(17, "{{ usermanual }}", "Manual");
-      addEmptyCells(23, 3);
+      addEmptyCells(23, 2);
+      addLinkToCell(25, "{{ bc }}", "☲");
     }
     if (selected === "make") {
       addEmptyCells(1, 2);
